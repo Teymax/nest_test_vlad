@@ -7,7 +7,7 @@ $ yarn
 ## Running the app
 
 ```bash
-# development (host:3000)
+# development (default host: 3000)
 $ docker-compose up
 $ yarn start
 ```
