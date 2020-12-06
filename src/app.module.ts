@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { config } from './config';
+import { AppGateway } from './app.gateway';
 
 @Module({
   imports: [
@@ -10,6 +11,6 @@ import { config } from './config';
     }),
   ],
   controllers: [],
-  providers: [],
+  providers: [AppGateway],
 })
 export class AppModule {}
