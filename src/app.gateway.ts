@@ -8,10 +8,32 @@ export class AppGateway implements OnGatewayInit {
     const client = redis.createClient(process.env.REDIS_PORT);
     client.subscribe('events');
     client.on('message', (channel, message) => {
-      server.emit('message', message);
+      server.emit('message', this.formatResponse(JSON.parse(message)));
     });
     client.on('error', (error) => {
       server.emit('error', error);
     });
+  }
+  formatResponse(message): unknown {
+    let value;
+    const { type, receivedAt } = message;
+    switch (type) {
+      case 'identify':
+        value = message.traits.email;
+        break;
+      case 'track':
+        value = message.event;
+        break;
+      case 'page':
+        value = message.properties.path;
+        break;
+      default:
+        value = '--';
+    }
+    return {
+      type,
+      value,
+      receivedAt,
+    };
   }
 }
