@@ -14,9 +14,9 @@ export class AppGateway implements OnGatewayInit {
       server.emit('error', error);
     });
   }
-  formatResponse(message): unknown {
+  formatResponse(message): any {
     let value;
-    const { type, receivedAt } = message;
+    const { type, receivedAt, messageId } = message;
     switch (type) {
       case 'identify':
         value = message.traits.email;
@@ -31,6 +31,7 @@ export class AppGateway implements OnGatewayInit {
         value = '--';
     }
     return {
+      messageId,
       type,
       value,
       receivedAt,
